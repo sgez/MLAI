@@ -1,0 +1,37 @@
+input {
+	file {
+		path => "/Users/sgez/Documents/GitHub/ML/datasets/milano_cells/*.csv"
+		start_position => "beginning"
+		sincedb_path => "/dev/null"
+	}
+}
+
+filter {
+	csv {
+		separator => " "
+		
+		columns => ["square_id", "timestamp", "country_code",
+		"sms_in", "sms_out",	"call_in","call_out", "internet"]
+	}
+
+	mutate {convert => ["square_id", "string"]}
+	mutate {convert => ["sms_in", "float"]}
+	mutate {convert => ["sms_out", "float"]}
+	mutate {convert => ["call_in", "float"]}
+	mutate {convert => ["call_out", "float"]}
+	mutate {convert => ["internet", "float"]}
+	mutate {convert => ["timestamp", "integer"]}
+
+	
+
+
+}
+
+output{
+	elasticsearch {
+		hosts => "localhost"
+		index => "logstash-milano-cells"
+		document_type => "milano_traffic"
+	}
+	stdout {} 
+}

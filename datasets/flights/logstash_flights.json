@@ -1,0 +1,34 @@
+input {
+	file {
+		path => "/Users/sgez/Documents/GitHub/ML/datasets/flights/*.csv"
+		start_position => "beginning"
+		sincedb_path => "/dev/null"
+	}
+}
+
+filter {
+	csv {
+		separator => ","
+		
+		columns => ["Year", "Month", "DayofMonth", "DayOfWeek", "DepTime", 
+		"CRSDepTime", "ArrTime", "CRSArrTime", "UniqueCarrier", 
+		"FlightNum", "TailNum", "ActualElapsedTime", "CRSElapsedTime",
+		"AirTime", "ArrDelay", "DepDelay", "Origin", "Dest",
+		"Distance", "TaxiIn","TaxiOut", "Cancelled", 
+		"CancellationCode", "Diverted", "CarrierDelay", "WeatherDelay",
+		"NASDelay", "SecurityDelay", "LateAircraftDelay"]
+	}
+
+	mutate {convert => ["Cancelled", "boolean"]}
+	mutate {convert => ["Diverted", "boolean"]}
+
+}
+
+output{
+	elasticsearch {
+		hosts => "localhost"
+		index => "logstash-flights"
+		document_type => "flights_done"
+	}
+	stdout {} 
+}
