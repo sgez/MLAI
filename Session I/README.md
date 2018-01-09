@@ -7,4 +7,5 @@ Session II, will contain more advanced topics and will progress towards time ser
 
 Special Thanks 
 ==============
-Dimitris Kalles from the Hellenic Open University - kalles@eap.gr.
+Dimitris Kalles from the Hellenic Open University - kalles@eap.gr
+https://tinyurl.com/dkalles
